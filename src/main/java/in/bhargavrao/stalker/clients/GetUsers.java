@@ -39,9 +39,9 @@ public class GetUsers {
 
         Long currentTimeInSeconds = System.currentTimeMillis() / 1000L;
         Long fromDate = currentTimeInSeconds-hours*60*60;
+        JsonObject json = null;
+        do  {
 
-        while (true) {
-            JsonObject json = null;
             try {
                 json = fetchJsonOnPage(i, fromDate, site);
             } catch (ApiException e) {
@@ -59,10 +59,9 @@ public class GetUsers {
                     }
                 }
             }
-            if (!json.get("has_more").getAsBoolean()) break;
             quota = json.get("quota_remaining").getAsInt();
             i++;
-        }
+        }while (!json.get("has_more").getAsBoolean());
         return new SuccessMessage(timedUsers, quota);
     }
 

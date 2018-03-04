@@ -61,7 +61,7 @@ public class GetUsers {
             }
             quota = json.get("quota_remaining").getAsInt();
             i++;
-        }while (!json.get("has_more").getAsBoolean());
+        }while (json.get("has_more").getAsBoolean());
         return new SuccessMessage(timedUsers, quota);
     }
 
